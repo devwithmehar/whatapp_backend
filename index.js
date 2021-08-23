@@ -5,6 +5,7 @@ import Pusher from 'pusher'
 import dotenv from 'dotenv'
 dotenv.config()
 import cors from 'cors'
+import { timeStamp } from 'console';
 
 
 
@@ -51,8 +52,11 @@ db.once('open', () =>{
         if(change.operationType === 'insert') {
             const messageDetails = change.fullDocument;
             pusher.trigger('messages','inserted',{
+                _id: messageDetails._id,
                 name: messageDetails.name,
-                message: messageDetails.message
+                message: messageDetails.message,
+                timestamp:messageDetails.timestamp,
+                received : messageDetails.received,
                 
             });
         
